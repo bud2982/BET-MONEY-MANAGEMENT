@@ -1,0 +1,69 @@
+📄 SPECIFICA TECNICA — Metodo Kelly Ridotto per Gestione Stake su Eventi Simultanei
+📌 Obiettivo
+Implementare una logica di money management dinamico basata sul criterio Kelly Ridotto, per calcolare lo stake ottimale di ciascun evento in una sessione, anche se più eventi si giocano nello stesso momento.
+________________________________________
+🧠 Descrizione del Metodo
+Il criterio di Kelly calcola la frazione ottimale del bankroll da investire su una scommessa in base alla valutazione della probabilità reale di vincita e alla quota offerta.
+Per ridurre il rischio, si applica una frazione del Kelly pieno (es. 25%, 50%).
+________________________________________
+🧮 Formula
+Kelly completo:
+KellyPercent = [(p * (q - 1)) - (1 - p)] / (q - 1)
+•	p: probabilità reale stimata di successo (valore tra 0 e 1)
+•	q: quota offerta dal bookmaker
+Stake con Kelly Ridotto:
+Stake = bankroll_attuale * frazione_kelly * KellyPercent
+•	frazione_kelly: valore tra 0.1 e 0.5 consigliato (es. 0.25 per 25%)
+Se KellyPercent ≤ 0, non si effettua la puntata.
+________________________________________
+🧩 Gestione di Eventi Simultanei
+Ogni evento viene elaborato in modo indipendente.
+Input richiesto per ciascun evento:
+•	idEvento
+•	quotaBookmaker
+•	probabilitaStimata (valore compreso tra 0.00 e 1.00)
+•	frazioneKelly (es. 0.25)
+•	cassaAttuale
+Output:
+•	stakeCalcolato
+•	kellyPercent
+•	eseguiScommessa = true/false (solo se Kelly > 0)
+________________________________________
+🧷 Regole opzionali di sicurezza
+1. Cap simultaneo di rischio (multi-evento):
+pseudo
+CopiaModifica
+stakeTotaleSessione ≤ bankroll_attuale * rischioMassimoPercentuale
+Esempio: rischioMassimoPercentuale = 0.20 (20% della cassa)
+2. Cap per singolo evento:
+pseudo
+CopiaModifica
+stake ≤ stakeMassimoSingolo
+________________________________________
+🧪 Esempio
+Evento	Quota	Probabilità stimata	Kelly%	Stake con 25%	Esegui?
+A	2.00	0.55	10%	2.5€	✅
+B	2.40	0.40	3.33%	0.83€	✅
+C	1.65	0.50	-2.8%	0.00€	❌
+Totale investito (A + B) = 3.33€
+________________________________________
+🧰 Pseudocodice (semplificato)
+function calcolaStakeKelly(evento):
+    p = evento.probabilitaStimata
+    q = evento.quotaBookmaker
+
+    kellyPercent = ((p * (q - 1)) - (1 - p)) / (q - 1)
+
+    if kellyPercent <= 0:
+        return (0.0, kellyPercent, false)
+
+    stake = bankrollAttuale * frazioneKelly * kellyPercent
+    return (stake, kellyPercent, true)
+________________________________________
+________________________________________
+
+
+
+
+
+
