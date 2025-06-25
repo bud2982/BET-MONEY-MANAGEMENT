@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>TOP BET Money Management</title>
+    <link rel="stylesheet" href="/src/index.css" />
+    <script>
+      // Gestisce il caso di errore 404 o di refresh della pagina
+      window.addEventListener('error', function(e) {
+        console.error('Errore rilevato:', e.message);
+        if (document.title.includes('404') || document.body.textContent.includes('404')) {
+          console.log('Rilevato errore 404, reindirizzamento...');
+          window.location.href = '/';
+        }
+      });
+      
+      // Controlla se la pagina è in stato di errore
+      document.addEventListener('DOMContentLoaded', function() {
+        if (document.title.includes('404') || document.body.textContent.includes('404')) {
+          console.log('Pagina di errore rilevata, reindirizzamento...');
+          window.location.href = '/';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>
