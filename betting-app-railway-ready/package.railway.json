@@ -1,0 +1,17 @@
+{
+  "name": "money-management-app",
+  "version": "2.1.0",
+  "description": "Advanced Money Management System with Beat the Delay Strategy",
+  "main": "server/index.ts",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "dev": "NODE_ENV=development tsx server/index.ts",
+    "build": "vite build",
+    "serve": "NODE_ENV=production tsx server/index.ts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

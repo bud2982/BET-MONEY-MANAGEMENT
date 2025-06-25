@@ -1,0 +1,76 @@
+Vorrei provae ad inserire un nuovo money management che si chiama Multi Masaniello. Il layout e le funzioni saranno uguali agli altri metodi fino ad ora creati
+📄 SPECIFICA TECNICA – MODULO MASANIELLO AVANZATO
+📌 Obiettivo del modulo
+Implementare un sistema di money management avanzato chiamato Masaniello, per la gestione strategica delle puntate su più eventi sportivi. L’algoritmo calcola l’importo ottimale da scommettere per ogni evento in una sequenza, al fine di raggiungere un obiettivo di profitto predeterminato, anche tollerando alcune perdite.
+________________________________________
+🎛️ Parametri iniziali (input richiesti all’utente)
+1.	Cassa iniziale (Double)
+Denaro disponibile per l’intera sequenza. Es: 100.0 €
+2.	Numero totale di eventi (Int)
+Quanti eventi (es. partite) compongono il piano Masaniello. Es: 7
+3.	Numero minimo di eventi da vincere (Int)
+Quanti eventi devono essere vinti per ottenere un profitto. Es: 5
+4.	Quote dei singoli eventi (List<Double>)
+Le quote possono essere inserite tutte in anticipo o una alla volta, in ordine cronologico. Es: [1.90, 2.00, 1.75, 2.10, ...]
+________________________________________
+⚙️ Logica operativa (workflow)
+🔁 Per ogni evento:
+1.	Calcolare l’importo da scommettere sulla base di:
+o	Cassa residua
+o	Eventi rimanenti
+o	Successi ottenuti
+o	Errori ancora tollerati
+2.	Dopo l’evento, l’utente inserisce l’esito:
+o	✅ Vinto → aggiornare la cassa (aumenta)
+o	❌ Perso → aggiornare gli errori (incremento)
+3.	Calcolare la nuova puntata per l’evento successivo
+4.	Continuare finché:
+o	🎯 Obiettivo raggiunto (successi >= obiettivo)
+o	❌ Obiettivo fallito (errori > tollerati)
+o	🔚 Fine degli eventi
+________________________________________
+🧮 Calcolo della puntata (stake)
+La puntata deve essere dinamica: varia in base allo stato del piano (successi, errori, eventi rimanenti).
+Formula suggerita (semplificata, può essere migliorata):
+stake = (cassa residua * rischio medio) / (eventi rimanenti - errori tollerabili + 1)
+•	Il "rischio medio" è tipicamente tra 0.03 e 0.08 (3%–8%)
+•	Deve esserci un controllo per evitare stake > cassa residua
+________________________________________
+📊 Output e interfaccia prevista
+L’interfaccia (schermata o API) deve mostrare:
+•	Eventi totali, successi, errori, eventi rimanenti
+•	Puntata consigliata per il prossimo evento
+•	Stato: “In corso”, “Obiettivo raggiunto”, “Fallito”
+•	Cassa aggiornata
+•	Eventuale grafico di avanzamento (barra o testo)
+________________________________________
+❗ Vincoli e regole
+•	Il modulo deve adattarsi in tempo reale: ogni esito inserito modifica lo stato
+•	Non deve usare progressioni tipo Martingala
+•	Deve interrompere la sequenza se l’obiettivo diventa irraggiungibile
+•	Quote variabili per ogni evento
+•	Deve supportare quote decimali (1.75, 2.10 ecc.)
+________________________________________
+🔄 Funzionalità opzionali (avanzate)
+•	Salvataggio delle sequenze Masaniello per sessione/giorno/mese
+•	Visualizzazione di un report finale con profitto/perdita
+•	Supporto a quote multiple (es. doppia chance, over/under)
+•	Notifiche o alert se si supera il numero massimo di errori
+________________________________________
+✅ Esempio pratico (per test)
+json
+CopiaModifica
+{
+  "cassaIniziale": 100.0,
+  "numeroEventi": 6,
+  "numeroMinimoVinti": 4,
+  "quote": [1.90, 2.00, 1.75, 2.10, 1.95, 1.85]
+}
+Il modulo calcolerà quanto puntare su ogni evento. Dopo ogni risultato inserito (esito vinto/perso), ricalcola la puntata successiva finché l’obiettivo è raggiunto o fallito.
+________________________________________
+📦 Output atteso finale
+•	Stato finale: SUCCESSO o FALLIMENTO
+•	Profitto totale: +€X o -€Y
+•	Percentuale completamento: es. 5/6 eventi vinti
+•	Log delle puntate effettuate con esito (data, quota, stake, vinta/persa)
+
